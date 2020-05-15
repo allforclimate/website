@@ -17,9 +17,13 @@
   },
   "homepage": "https://github.com/AllForClimate/website#readme",
   "dependencies": {
+    "moment": "^2.25.3",
+    "momentjs": "^2.0.0",
     "next": "^9.4.0",
+    "numeral": "^2.0.6",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "rebass": "^4.0.7",
     "styled-components": "^5.1.0"
   }
 }

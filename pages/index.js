@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Link from 'next/link';
 
 const Body = styled.div`
   max-width: 660px;
@@ -15,7 +16,7 @@ const Links = styled.div`
   margin:0;
 `;
 
-const Link = styled.a`
+const StyledLink = styled.a`
   text-decoration: none;
   display: block;
   margin: 15px 0;
@@ -23,6 +24,7 @@ const Link = styled.a`
   border-radius: 5px;
   min-width: 250px;
   max-width: 300px;
+  cursor: pointer;
   padding: 10px;
   &:hover {
     background: #eee
@@ -59,10 +61,11 @@ export default () => (
     <center>
       <img src="/images/allforclimate-logo.png" />
       <Links>
-        <Link href="https://opencollective.com/allforclimate">List of collectives we are hosting</Link>
-        <Link href="https://opencollective.com/allforclimate/apply">Apply to host your collective</Link>
-        <Link href="https://docs.allforclimate.earth">📕 Documentation</Link>
-        <Link href="https://drive.allforclimate.earth">📂 Google Drive</Link>
+        <Link href="/collectives"><StyledLink>List of collectives we are hosting</StyledLink></Link>
+        <Link href="/updates"><StyledLink>Latest updates</StyledLink></Link>
+        <StyledLink href="https://opencollective.com/allforclimate/apply">Apply to host your collective</StyledLink>
+        <StyledLink href="https://docs.allforclimate.earth">📕 Documentation</StyledLink>
+        <StyledLink href="http://drive.allforclimate.earth">📂 Google Drive</StyledLink>
       </Links>
 
       <About>
