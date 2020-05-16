@@ -92,7 +92,7 @@ export default ({ updates }) => {
 }
 
 async function getData() {
-  console.log(">>> fetching data from OC graphql API")
+  console.log(">>> fetching updates from OC graphql API", process.env.OC_GRAPHQL_API);
   const query = `
   query collective($slug: String) {
     Collective (slug: $slug) {

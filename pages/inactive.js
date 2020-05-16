@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import CollectiveCard from '../components/CollectiveCard';
-import { Flex } from 'rebass';
+import { Flex, Box } from 'rebass';
+import { get } from 'lodash';
+import moment from 'moment';
 
 const Body = styled.div`
   max-width: 900px;
@@ -55,16 +57,31 @@ const H2 = styled.h2`
   margin: 40px 0 10px;
 `;
 
-export default ({collectives}) => {
+export default ({ collectives }) => {
+  let lastActivityString;
+  let label;
+
   return (
     <Body>
       <center>
         <img src="/images/allforclimate-logo.png" height={64} />
         <H2>We are hosting {collectives.length} collectives</H2>
         <Flex flexWrap="wrap" justifyContent="center">
-          {collectives.map(node => (
-            <CollectiveCard data={node.collective} />
-          ))}
+          {collectives.map(node => {
+            const newLastActivityString = node.collective.lastActivityAt ? `Last activity: ${moment(node.collective.lastActivityAt).fromNow()}` : 'No activity yet';
+            if (newLastActivityString != lastActivityString) {
+              lastActivityString = newLastActivityString;
+              label = <Box width={1}><H2>{lastActivityString}</H2></Box>
+            } else {
+              label = <span />
+            }
+            return (
+              <>
+                {label}
+                <CollectiveCard data={node.collective} />
+              </>
+            )
+          })}
         </Flex>
       </center>
     </Body>
@@ -72,12 +89,11 @@ export default ({collectives}) => {
 }
 
 async function getData() {
-  console.log(">>> fetching collectives data from OC graphql API", process.env.OC_GRAPHQL_API);
+  console.log(">>> fetching inactive collectives data from OC graphql API", process.env.OC_GRAPHQL_API);
   const query = `
   query collective($slug: String) {
     Collective (slug: $slug) {
       name,
-      description
       memberOf(role: "HOST") {
         collective {
           slug
@@ -91,15 +107,34 @@ async function getData() {
               all
             }
           }
-          updates {
+          updates(limit: 1) {
             createdAt
             title
+          }
+          expenses(limit: 1) {
+            createdAt
+            description
+          }
+          transactions(limit: 1) {
+            createdAt
+            amount
+            description
           }
         }
       }
     }
   }
   `;
+
+  function getTime(datestring) {
+    if (!datestring) return 0;
+    const d = new Date(datestring);
+    return d.getTime();
+  }
+
+  function getLastActivityAt(collective) {
+    return Math.max(getTime(get(collective, 'updates[0].createdAt')), getTime(get(collective, 'expenses[0].createdAt')), getTime(get(collective, 'transactions[0].createdAt')));
+  }
 
   const res = await fetch(process.env.OC_GRAPHQL_API, {
     method: 'post',
@@ -109,9 +144,9 @@ async function getData() {
   const json = await res.json();
   let collectives = json.data.Collective.memberOf;
   collectives.sort((a, b) => {
-    if (a.collective.stats.backers.all > b.collective.stats.backers.all) return -1;
-    if (a.collective.stats.backers.all < b.collective.stats.backers.all) return 1;
-    return (a.collective.stats.balance > b.collective.stats.balance) ? -1 : 1;
+    a.collective.lastActivityAt = getLastActivityAt(a.collective);
+    b.collective.lastActivityAt = getLastActivityAt(b.collective);
+    return (a.collective.lastActivityAt > b.collective.lastActivityAt) ? 1 : -1;
   });
 
   return { collectives };

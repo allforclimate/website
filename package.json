@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/AllForClimate/website#readme",
   "dependencies": {
+    "lodash": "^4.17.15",
     "moment": "^2.25.3",
     "momentjs": "^2.0.0",
     "next": "^9.4.0",
