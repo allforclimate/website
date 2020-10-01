@@ -4,7 +4,10 @@
   "description": "allforclimate.earth website",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   },
   "repository": {
     "type": "git",
@@ -17,14 +20,15 @@
   },
   "homepage": "https://github.com/AllForClimate/website#readme",
   "dependencies": {
-    "lodash": "^4.17.15",
-    "moment": "^2.25.3",
+    "@co-labs/oc-transparency-page": "^1.0.4",
+    "lodash": "^4.17.20",
+    "moment": "^2.29.0",
     "momentjs": "^2.0.0",
-    "next": "^9.4.4",
+    "next": "^9.5.3",
     "numeral": "^2.0.6",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "rebass": "^4.0.7",
-    "styled-components": "^5.1.0"
+    "styled-components": "^5.2.0"
   }
 }
