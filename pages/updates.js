@@ -148,6 +148,6 @@ export async function getStaticProps() {
     // we will attempt to re-generate the page:
     // - when a request comes in
     // - at most once every 10 seconds
-    unstable_revalidate: 10
+    revalidate: 10
   }
 }
