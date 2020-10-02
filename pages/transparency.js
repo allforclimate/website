@@ -4,7 +4,7 @@ import {useState} from "react";
 import TransparencyPage from "@co-labs/oc-transparency-page";
 
 const client = new ApolloClient({
-  uri: process.env.OC_GRAPHQL_API_V2 + process.env.NEXT_PUBLIC_OC_API_KEY,
+  uri: process.env.OC_GRAPHQL_API_V2 + (process.env.NEXT_PUBLIC_OC_API_KEY || '') ,
   cache: new InMemoryCache()
 });
 
