@@ -17,6 +17,7 @@ const Body = styled.div`
   font-size: 16px;
 `;
 
+
 const H2 = styled.h2`
   font-size: 24px;
   font-weight: 700;
