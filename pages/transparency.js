@@ -9,7 +9,7 @@ const client = new ApolloClient({
 });
 
 const Body = styled.div`
-  max-width: 900px;
+  max-width: 90%;
   margin: 0 auto;
   font-family: Content-font, Roboto, sans-serif;
   font-weight: 400;
