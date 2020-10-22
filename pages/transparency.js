@@ -4,7 +4,7 @@ import {useState} from "react";
 import TransparencyPage from "@co-labs/oc-transparency-page";
 
 const client = new ApolloClient({
-  uri: process.env.OC_GRAPHQL_API_V2 + (process.env.NEXT_PUBLIC_OC_API_KEY || '') ,
+  uri: process.env.OC_GRAPHQL_API_V2 + (process.env.NEXT_PUBLIC_OC_API_KEY || ''),
   cache: new InMemoryCache()
 });
 
@@ -31,13 +31,15 @@ const Page = ({collectives}) => {
   return (
     <Body>
       <center>
-        <img src="/images/allforclimate-logo.png" height={64}/>
-        <H2>We are hosting {collectives.length} collectives</H2>
-        <select value={slug} onChange={ e => setSlug(e.target.value) }>
-          {collectives.map(node => (
-            <option value={node.collective.slug} key={node.collective.slug}>{node.collective.name}</option>
-          ))}
-        </select>
+        <header style={{marginBottom: '1em'}}>
+          <img src="/images/allforclimate-logo.png" height={64}/>
+          <H2>We are hosting {collectives.length} collectives</H2>
+          <select value={slug} onChange={e => setSlug(e.target.value)}>
+            {collectives.map(node => (
+              <option value={node.collective.slug} key={node.collective.slug}>{node.collective.name}</option>
+            ))}
+          </select>
+        </header>
         <ApolloProvider client={client}>
           <TransparencyPage client={client} slug={slug}/>
         </ApolloProvider>
