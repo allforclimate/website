@@ -1,6 +1,6 @@
-import styled from 'styled-components';
-import CollectiveCard from '../components/CollectiveCard';
-import { Flex } from 'rebass';
+import styled from "styled-components";
+import CollectiveCard from "../components/CollectiveCard";
+import { Flex } from "rebass";
 
 const Body = styled.div`
   max-width: 900px;
@@ -12,21 +12,21 @@ const Body = styled.div`
 `;
 
 const Links = styled.div`
-  padding:0;
-  margin:0;
+  padding: 0;
+  margin: 0;
 `;
 
 const Link = styled.a`
   text-decoration: none;
   display: block;
   margin: 15px 0;
-  border: 1px solid #4A7A84;
+  border: 1px solid #4a7a84;
   border-radius: 5px;
   min-width: 250px;
   max-width: 300px;
   padding: 10px;
   &:hover {
-    background: #eee
+    background: #eee;
   }
 `;
 
@@ -34,9 +34,7 @@ const About = styled.div`
   margin: 50px 0;
 `;
 
-const Footer = styled.div`
-
-`;
+const Footer = styled.div``;
 
 const FooterLink = styled.a`
   text-decoration: none;
@@ -55,24 +53,27 @@ const H2 = styled.h2`
   margin: 40px 0 10px;
 `;
 
-export default ({collectives}) => {
+export default ({ collectives }) => {
   return (
     <Body>
       <center>
         <img src="/images/allforclimate-logo.png" height={64} />
         <H2>We are hosting {collectives.length} collectives</H2>
         <Flex flexWrap="wrap" justifyContent="center">
-          {collectives.map(node => (
+          {collectives.map((node) => (
             <CollectiveCard data={node.collective} />
           ))}
         </Flex>
       </center>
     </Body>
-  )
-}
+  );
+};
 
 async function getData() {
-  console.log(">>> fetching collectives data from OC graphql API", process.env.OC_GRAPHQL_API);
+  console.log(
+    ">>> fetching collectives data from OC graphql API",
+    process.env.OC_GRAPHQL_API
+  );
   const query = `
   query collective($slug: String) {
     Collective (slug: $slug) {
@@ -102,16 +103,18 @@ async function getData() {
   `;
 
   const res = await fetch(process.env.OC_GRAPHQL_API, {
-    method: 'post',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ query, variables: { slug: "allforclimate" } })
+    method: "post",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ query, variables: { slug: "allforclimate" } }),
   });
   const json = await res.json();
   let collectives = json.data.Collective.memberOf;
   collectives.sort((a, b) => {
-    if (a.collective.stats.backers.all > b.collective.stats.backers.all) return -1;
-    if (a.collective.stats.backers.all < b.collective.stats.backers.all) return 1;
-    return (a.collective.stats.balance > b.collective.stats.balance) ? -1 : 1;
+    if (a.collective.stats.backers.all > b.collective.stats.backers.all)
+      return -1;
+    if (a.collective.stats.backers.all < b.collective.stats.backers.all)
+      return 1;
+    return a.collective.stats.balance > b.collective.stats.balance ? -1 : 1;
   });
 
   return { collectives };
@@ -123,6 +126,6 @@ export async function getStaticProps() {
     // we will attempt to re-generate the page:
     // - when a request comes in
     // - at most once every 180 seconds
-    unstable_revalidate: 180
-  }
+    revalidate: 180,
+  };
 }

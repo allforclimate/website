@@ -1,8 +1,8 @@
-import styled from 'styled-components';
-import CollectiveCard from '../components/CollectiveCard';
-import { Flex, Box } from 'rebass';
-import { get } from 'lodash';
-import moment from 'moment';
+import styled from "styled-components";
+import CollectiveCard from "../components/CollectiveCard";
+import { Flex, Box } from "rebass";
+import { get } from "lodash";
+import moment from "moment";
 
 const Body = styled.div`
   max-width: 900px;
@@ -14,21 +14,21 @@ const Body = styled.div`
 `;
 
 const Links = styled.div`
-  padding:0;
-  margin:0;
+  padding: 0;
+  margin: 0;
 `;
 
 const Link = styled.a`
   text-decoration: none;
   display: block;
   margin: 15px 0;
-  border: 1px solid #4A7A84;
+  border: 1px solid #4a7a84;
   border-radius: 5px;
   min-width: 250px;
   max-width: 300px;
   padding: 10px;
   &:hover {
-    background: #eee
+    background: #eee;
   }
 `;
 
@@ -36,9 +36,7 @@ const About = styled.div`
   margin: 50px 0;
 `;
 
-const Footer = styled.div`
-
-`;
+const Footer = styled.div``;
 
 const FooterLink = styled.a`
   text-decoration: none;
@@ -67,29 +65,40 @@ export default ({ collectives }) => {
         <img src="/images/allforclimate-logo.png" height={64} />
         <H2>We are hosting {collectives.length} collectives</H2>
         <Flex flexWrap="wrap" justifyContent="center">
-          {collectives.map(node => {
-            const newLastActivityString = node.collective.lastActivityAt ? `Last activity: ${moment(node.collective.lastActivityAt).fromNow()}` : 'No activity yet';
+          {collectives.map((node) => {
+            const newLastActivityString = node.collective.lastActivityAt
+              ? `Last activity: ${moment(
+                  node.collective.lastActivityAt
+                ).fromNow()}`
+              : "No activity yet";
             if (newLastActivityString != lastActivityString) {
               lastActivityString = newLastActivityString;
-              label = <Box width={1}><H2>{lastActivityString}</H2></Box>
+              label = (
+                <Box width={1}>
+                  <H2>{lastActivityString}</H2>
+                </Box>
+              );
             } else {
-              label = <span />
+              label = <span />;
             }
             return (
               <>
                 {label}
                 <CollectiveCard data={node.collective} />
               </>
-            )
+            );
           })}
         </Flex>
       </center>
     </Body>
-  )
-}
+  );
+};
 
 async function getData() {
-  console.log(">>> fetching inactive collectives data from OC graphql API", process.env.OC_GRAPHQL_API);
+  console.log(
+    ">>> fetching inactive collectives data from OC graphql API",
+    process.env.OC_GRAPHQL_API
+  );
   const query = `
   query collective($slug: String) {
     Collective (slug: $slug) {
@@ -133,20 +142,24 @@ async function getData() {
   }
 
   function getLastActivityAt(collective) {
-    return Math.max(getTime(get(collective, 'updates[0].createdAt')), getTime(get(collective, 'expenses[0].createdAt')), getTime(get(collective, 'transactions[0].createdAt')));
+    return Math.max(
+      getTime(get(collective, "updates[0].createdAt")),
+      getTime(get(collective, "expenses[0].createdAt")),
+      getTime(get(collective, "transactions[0].createdAt"))
+    );
   }
 
   const res = await fetch(process.env.OC_GRAPHQL_API, {
-    method: 'post',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ query, variables: { slug: "allforclimate" } })
+    method: "post",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ query, variables: { slug: "allforclimate" } }),
   });
   const json = await res.json();
   let collectives = json.data.Collective.memberOf;
   collectives.sort((a, b) => {
     a.collective.lastActivityAt = getLastActivityAt(a.collective);
     b.collective.lastActivityAt = getLastActivityAt(b.collective);
-    return (a.collective.lastActivityAt > b.collective.lastActivityAt) ? 1 : -1;
+    return a.collective.lastActivityAt > b.collective.lastActivityAt ? 1 : -1;
   });
 
   return { collectives };
@@ -158,6 +171,6 @@ export async function getStaticProps() {
     // we will attempt to re-generate the page:
     // - when a request comes in
     // - at most once every 180 seconds
-    unstable_revalidate: 180
-  }
+    revalidate: 180,
+  };
 }
