@@ -6,19 +6,6 @@ import RenderGoogleDoc from "../components/RenderGoogleDoc";
 
 const PAGE_DOC_ID = "1DcN_fcJcXFz01yUlqHO4TD-U3Q7gg96AKvHPAVISvro";
 
-export async function getStaticPaths() {
-  return {
-    paths: [
-      {
-        params: {
-          docid: PAGE_DOC_ID,
-        },
-      },
-    ],
-    fallback: true,
-  };
-}
-
 export async function getStaticProps() {
   const html = await getHTMLFromGoogleDocId(PAGE_DOC_ID);
 

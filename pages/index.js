@@ -106,7 +106,7 @@ export default () => (
       </About>
 
       <Footer>
-        <Label>Find us on:</Label>
+        <FooterLink href="/internships">Internships</FooterLink>
         <FooterLink href="https://opencollective.com/allforclimate">
           Open Collective
         </FooterLink>
