@@ -1,0 +1,20 @@
+{
+  "index": {
+    "title": "All for Climate DAO",
+    "description":
+      "A temporary occupation for citizens in Bienfaiteurs, Brussels",
+    "image": "https://citizencorner.brussels/citizencorner-building-800.jpg",
+    "googleDocId": "1QPGenxAvjHlnonviYQrjqrdFHDsvX8UEqBrIyn5wZpM"
+  },
+  "values": {
+    "googleDocId": "1K93Z8xsLkkhqMoWIbAKi9Iy2ZdwWgmbgOV8io27UT54"
+  },
+  "openroles": {
+    "googleDocId": "1mSgaDyUFr_hrsU4vcZEdAmCOwwjcjrklt3MI24WjsNE"
+  },
+  "contribute": {
+    "title": "Citizen Corner - Contribute",
+    "description": "Looking for ways to contribute? Check out this list of things we need to keep the Citizen Corner running.",
+    "googleDocId": "1mSgaDyUFr_hrsU4vcZEdAmCOwwjcjrklt3MI24WjsNE"
+  }
+}

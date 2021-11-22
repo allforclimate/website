@@ -62,7 +62,7 @@ export default ({ collectives }) => {
   return (
     <Body>
       <center>
-        <img src="/images/allforclimate-logo.png" height={64} />
+        <img src="/images/allforclimate-logo-black.png" width={128} />
         <H2>We are hosting {collectives.length} collectives</H2>
         <Flex flexWrap="wrap" justifyContent="center">
           {collectives.map((node) => {

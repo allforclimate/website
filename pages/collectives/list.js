@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import CollectiveCard from "../components/CollectiveCard";
+import CollectiveCard from "../../components/CollectiveCard";
 import { Flex } from "rebass";
 
 const Body = styled.div`
@@ -57,7 +57,10 @@ export default ({ collectives }) => {
   return (
     <Body>
       <center>
-        <img src="/images/allforclimate-logo.png" height={64} />
+        <img
+          src="https://allforclimate.earth/images/allforclimate-logo-black.png"
+          width={128}
+        />
         <H2>We are hosting {collectives.length} collectives</H2>
         <Flex flexWrap="wrap" justifyContent="center">
           {collectives.map((node) => (

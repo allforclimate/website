@@ -3,7 +3,7 @@ const Footer = ({ googleDocId }) => (
     <div>
       <a href="https://allforclimate.earth">
         <img
-          src="/images/allforclimate-icon.png"
+          src="/images/allforclimate-icon-black.png"
           alt="All for Climate Logo"
           className="h-10 mx-0"
         />

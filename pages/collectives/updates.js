@@ -1,17 +1,10 @@
 import styled from "styled-components";
-import Update from "../components/Update";
+import Update from "../../components/Update";
 import moment from "moment";
 
 import { Flex } from "rebass";
 
-const Body = styled.div`
-  max-width: 900px;
-  margin: 0 auto;
-  font-family: Content-font, Roboto, sans-serif;
-  font-weight: 400;
-  line-height: 1.625;
-  font-size: 16px;
-`;
+const Body = styled.div``;
 
 const Links = styled.div`
   padding: 0;
@@ -64,27 +57,32 @@ export default ({ updates }) => {
   let lastMonth;
   return (
     <Body>
-      <center>
-        <img src="/images/allforclimate-logo.png" height={64} />
-        <H1>Latest updates from our collectives</H1>
-        <Flex flexWrap="wrap" justifyContent="center">
-          {updates.map((update) => {
-            const date = new Date(update.createdAt);
-            const month = date.getMonth();
-            let label = <div />;
-            if (month != lastMonth) {
-              lastMonth = month;
-              label = <H2>{moment(update.createdAt).format("MMMM YYYY")}</H2>;
-            }
-            return (
-              <>
-                {label}
-                <Update data={update} />
-              </>
-            );
-          })}
-        </Flex>
-      </center>
+      <div className="max-w-screen-md px-4 mx-auto">
+        <center>
+          <img
+            src="https://allforclimate.earth/images/allforclimate-logo-black.png"
+            width={128}
+          />
+          <H1>Latest updates from our collectives</H1>
+          <Flex flexWrap="wrap" justifyContent="center">
+            {updates.map((update) => {
+              const date = new Date(update.createdAt);
+              const month = date.getMonth();
+              let label = <div />;
+              if (month != lastMonth) {
+                lastMonth = month;
+                label = <H2>{moment(update.createdAt).format("MMMM YYYY")}</H2>;
+              }
+              return (
+                <>
+                  {label}
+                  <Update data={update} />
+                </>
+              );
+            })}
+          </Flex>
+        </center>
+      </div>
     </Body>
   );
 };
