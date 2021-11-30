@@ -63,7 +63,7 @@ module.exports = {
           },
         ],
         permanent: false,
-        destination: "https://discord.gg/mepZUa5VSW",
+        destination: "https://discord.gg/7Cb6Nf2MgM",
       },
     ];
   },
