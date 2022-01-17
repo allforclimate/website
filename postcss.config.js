@@ -32,30 +32,3 @@ module.exports = {
     ],
   ],
 };
-
-// const purgecss = require("@fullhuman/postcss-purgecss")({
-//   // paths to all of the template files in the project
-//   content: [
-//     "./pages/**/*.{js,jsx,ts,tsx}",
-//     "./components/**/*.{js,jsx,ts,tsx}",
-//   ],
-//   // This is the function used to extract class names from the templates
-//   defaultExtractor: (content) => {
-//     const arr = content.match(/[\w-/:]+(?<!:)/g) || [];
-//     arr.push("ul", "li", "pagebreak", "p", "h1", "h2", "h3", "h4", "h5", "h6");
-//     return arr;
-//   },
-// });
-
-// module.exports = {
-//   plugins: [
-//     require("tailwindcss"),
-//     require("postcss-preset-env")({
-//       stage: 1,
-//       features: {
-//         "focus-within-pseudo-class": false,
-//       },
-//     }),
-//     ...(process.env.NODE_ENV === "production" ? [purgecss] : []),
-//   ],
-// };
