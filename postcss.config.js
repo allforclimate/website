@@ -9,7 +9,18 @@ const purgecss = [
     // This is the function used to extract class names from the templates
     defaultExtractor: (content) => {
       const arr = content.match(/[\w-/:]+(?<!:)/g) || [];
-      arr.push("ul", "li", "pagebreak");
+      arr.push(
+        "ul",
+        "li",
+        "pagebreak",
+        "p",
+        "h1",
+        "h2",
+        "h3",
+        "h4",
+        "h5",
+        "h6"
+      );
       return arr;
     },
   },
