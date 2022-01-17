@@ -40,6 +40,14 @@ h3 {
   @apply text-xl;
 }
 
+h4 {
+  @apply mt-6 mb-2;
+}
+
+h5 {
+  @apply mt-4 mb-1;
+}
+
 hr {
   border: none;
   background-color: #eaeaea;
