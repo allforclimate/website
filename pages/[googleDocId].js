@@ -1,10 +1,13 @@
 import Head from "next/head";
 import { getHTMLFromGoogleDocId } from "../lib/googledoc";
 import { getPageMetadata } from "../lib/lib";
+import Outline from "../components/Outline";
 import Footer from "../components/Footer";
 import ErrorNotPublished from "../components/ErrorNotPublished";
 import RenderGoogleDoc from "../components/RenderGoogleDoc";
 import sitemap from "../sitemap.json";
+import { useEffect, useState } from "react";
+import { times } from "lodash";
 
 const defaultValues = sitemap.index;
 
@@ -39,6 +42,7 @@ export async function getStaticProps({ params }) {
     description: pageInfo.description || doc.description || null,
     image: pageInfo.image || null,
     body: doc.body,
+    outline: doc.outline,
     googleDocId,
   };
 
@@ -53,7 +57,89 @@ export async function getStaticProps({ params }) {
 
 export default function Home({ page }) {
   if (!page) return <div />;
-  const { title, description, body, image, googleDocId } = page;
+  const { title, description, outline, body, image, googleDocId } = page;
+  const [currentSection, setCurrentSection] = useState();
+  const [currentDocWidth, setCurrentDocWidth] = useState(0);
+
+  function changeCurrentSection(section) {
+    setCurrentSection(section);
+    document.querySelectorAll("#outline a").forEach((el) => {
+      const href = el.getAttribute("href");
+      if (href === `#${section}`) {
+        el.classList.add("bg-gray-300");
+        console.log(">>> adding active to", el);
+      } else {
+        el.classList.remove("bg-gray-300");
+      }
+    });
+    console.log(">>> current section", section);
+    history.replaceState(
+      null,
+      null,
+      document.location.pathname + (section ? "#" + section : "")
+    );
+  }
+
+  function logit() {
+    const y = window.pageYOffset;
+    if (y % 5 !== 0) return false;
+
+    let section = null,
+      index = 0;
+    outline.forEach((item, i) => {
+      if (y >= item.offsetTop - 60) {
+        section = item.slug;
+        index = i;
+      }
+    });
+    if (section !== currentSection) {
+      changeCurrentSection(section);
+    }
+  }
+
+  function computeOffset() {
+    const docEl = document.querySelector("#document");
+    if (Math.abs(docEl.offsetWidth - currentDocWidth) < 50) {
+      return;
+    }
+    console.log(
+      "computeOffset",
+      currentDocWidth,
+      Math.abs(docEl.offsetWidth - currentDocWidth)
+    );
+    console.log(">>> setCurrentDocWidth", Number(docEl.offsetWidth));
+    setCurrentDocWidth(Number(docEl.offsetWidth) || 120);
+    console.log(">>> currentDocWidth", currentDocWidth);
+    docEl.querySelectorAll("h1,h2,h3,h4,h5,h6").forEach((el) => {
+      const slug = el.getAttribute("id");
+      const item = outline.find((o) => o.slug === slug);
+      item.offsetTop = el.offsetTop;
+      item.el = el;
+    });
+    console.log(
+      ">>> outline computed for doc width",
+      docEl.offsetWidth,
+      outline
+    );
+  }
+
+  useEffect(() => {
+    // we only highlight the current section on large screens
+    // where the outline is visible side by side
+    if (window.innerWidth < 768) return false;
+
+    function addListeners() {
+      window.addEventListener("scroll", logit);
+      window.addEventListener("resize", computeOffset);
+    }
+    computeOffset();
+    addListeners();
+    return () => {
+      window.removeEventListener("scroll", logit);
+      window.removeEventListener("resize", computeOffset);
+    };
+  });
+
   return (
     <div className="w-full">
       <Head>
@@ -66,15 +152,23 @@ export default function Home({ page }) {
         <meta name="og:image" content={image || defaultValues.image} />
       </Head>
 
-      <main className="max-w-screen-md px-4 mx-auto">
-        {!body && <p>Loading...</p>}
-        {body === "not_published" && (
-          <ErrorNotPublished googleDocId={googleDocId} />
+      <main className="relative min-h-screen md:flex">
+        {outline && (
+          <Outline outline={outline} onChange={() => computeOffset()} />
         )}
-        {body && <RenderGoogleDoc html={body} />}
+        <div className="content px-4 mx-auto max-w-screen-md flex-1 overflow-auto">
+          {!body && <p>Loading...</p>}
+          {body === "not_published" && (
+            <ErrorNotPublished googleDocId={googleDocId} />
+          )}
+          {body && (
+            <div id="document">
+              <RenderGoogleDoc html={body} />
+              <Footer googleDocId={googleDocId} />
+            </div>
+          )}
+        </div>
       </main>
-
-      <Footer googleDocId={googleDocId} />
     </div>
   );
 }

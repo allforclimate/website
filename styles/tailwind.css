@@ -15,21 +15,29 @@ body {
   font-size: 11pt;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+#outline .active {
+  color: red;
+}
+
 span {
   font-size: 11pt;
 }
 
-a,
-span a {
+.content a,
+.content span a {
   text-decoration: none !important;
   @apply no-underline text-green-700 !important;
 }
 
-a:hover {
+.content a:hover {
   @apply text-green-900;
 }
 
-a:visited {
+.content a:visited {
   @apply text-green-600;
 }
 
