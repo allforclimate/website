@@ -60,6 +60,28 @@ module.exports = {
         has: [
           {
             type: "host",
+            value: "dework.allforclimate.earth",
+          },
+        ],
+        permanent: false,
+        destination: "https://dework.xyz/o/all-for-clim-5YSFCGX71LR0qVyvqsL2w5",
+      },
+      {
+        source: "/(.*)",
+        has: [
+          {
+            type: "host",
+            value: "projects.allforclimate.earth",
+          },
+        ],
+        permanent: false,
+        destination: "https://dework.xyz/o/all-for-clim-5YSFCGX71LR0qVyvqsL2w5",
+      },
+      {
+        source: "/(.*)",
+        has: [
+          {
+            type: "host",
             value: "discord.allforclimate.earth",
           },
         ],
