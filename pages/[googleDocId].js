@@ -4,6 +4,7 @@ import { getPageMetadata } from "../lib/lib";
 import Outline from "../components/Outline";
 import Footer from "../components/Footer";
 import ErrorNotPublished from "../components/ErrorNotPublished";
+import ErrorInvalidDocId from "../components/ErrorInvalidDocId";
 import RenderGoogleDoc from "../components/RenderGoogleDoc";
 import sitemap from "../sitemap.json";
 import { useEffect, useState } from "react";
@@ -35,15 +36,22 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const pageInfo = getPageMetadata(params.googleDocId);
   const googleDocId = pageInfo.googleDocId || params.googleDocId;
-  const doc = await getHTMLFromGoogleDocId(googleDocId);
+  let doc = {},
+    error = null;
+  try {
+    doc = await getHTMLFromGoogleDocId(googleDocId);
+  } catch (e) {
+    error = e.message;
+  }
 
   const page = {
     title: pageInfo.title || doc.title || null,
     description: pageInfo.description || doc.description || null,
     image: pageInfo.image || null,
-    body: doc.body,
-    outline: doc.outline,
+    body: doc.body || null,
+    outline: doc.outline || null,
     googleDocId,
+    error,
   };
 
   return {
@@ -57,7 +65,7 @@ export async function getStaticProps({ params }) {
 
 export default function Home({ page }) {
   if (!page) return <div />;
-  const { title, description, outline, body, image, googleDocId } = page;
+  const { title, description, outline, body, image, googleDocId, error } = page;
   const [currentSection, setCurrentSection] = useState();
   const [currentDocWidth, setCurrentDocWidth] = useState(0);
 
@@ -99,6 +107,7 @@ export default function Home({ page }) {
 
   function computeOffset() {
     const docEl = document.querySelector("#document");
+    if (!docEl) return;
     if (Math.abs(docEl.offsetWidth - currentDocWidth) < 50) {
       return;
     }
@@ -107,20 +116,13 @@ export default function Home({ page }) {
       currentDocWidth,
       Math.abs(docEl.offsetWidth - currentDocWidth)
     );
-    console.log(">>> setCurrentDocWidth", Number(docEl.offsetWidth));
     setCurrentDocWidth(Number(docEl.offsetWidth) || 120);
-    console.log(">>> currentDocWidth", currentDocWidth);
     docEl.querySelectorAll("h1,h2,h3,h4,h5,h6").forEach((el) => {
       const slug = el.getAttribute("id");
       const item = outline.find((o) => o.slug === slug);
       item.offsetTop = el.offsetTop;
       item.el = el;
     });
-    console.log(
-      ">>> outline computed for doc width",
-      docEl.offsetWidth,
-      outline
-    );
   }
 
   useEffect(() => {
@@ -157,9 +159,12 @@ export default function Home({ page }) {
           <Outline outline={outline} onChange={() => computeOffset()} />
         )}
         <div className="content px-4 mx-auto max-w-screen-md flex-1 overflow-auto">
-          {!body && <p>Loading...</p>}
-          {body === "not_published" && (
+          {!body && !error && <p>Loading...</p>}
+          {error === "not_published" && (
             <ErrorNotPublished googleDocId={googleDocId} />
+          )}
+          {error === "invalid_googledocid" && (
+            <ErrorInvalidDocId googleDocId={googleDocId} />
           )}
           {body && (
             <div id="document">
