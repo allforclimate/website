@@ -146,7 +146,7 @@ export default function Home({ page }) {
     <div className="w-full">
       <Head>
         <title>{title || defaultValues.title}</title>
-        <link rel="icon" href="/images/allforclimate-favicon.png" />
+        <link rel="icon" href={defaultValues.favicon} />
         <meta
           name="description"
           content={description || defaultValues.description}

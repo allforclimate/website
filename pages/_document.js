@@ -31,14 +31,7 @@ class MyDocument extends Document {
   render() {
     return (
       <Html>
-        <Head>
-          <link rel="shortcut icon" href="/images/allforclimate-icon.png" />
-          <title>All for Climate</title>
-          <meta
-            name="description"
-            content="A shared non profit for your activism"
-          />
-        </Head>
+        <Head></Head>
         <body>
           <Main />
           <NextScript />
