@@ -120,6 +120,7 @@ export default function Home({ page }) {
     docEl.querySelectorAll("h1,h2,h3,h4,h5,h6").forEach((el) => {
       const slug = el.getAttribute("id");
       const item = outline.find((o) => o.slug === slug);
+      if (!item) return;
       item.offsetTop = el.offsetTop;
       item.el = el;
     });
