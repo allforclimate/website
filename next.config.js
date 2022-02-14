@@ -82,6 +82,18 @@ module.exports = {
         has: [
           {
             type: "host",
+            value: "calendar.allforclimate.earth",
+          },
+        ],
+        permanent: false,
+        destination:
+          "https://calendar.google.com/calendar/u/0/embed?src=c_kcbdb0ulem2nivoiugvfbmhjb8@group.calendar.google.com",
+      },
+      {
+        source: "/(.*)",
+        has: [
+          {
+            type: "host",
             value: "discord.allforclimate.earth",
           },
         ],
