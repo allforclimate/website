@@ -23,6 +23,21 @@
     "title": "All for Climate DAO - projects",
     "googleDocId": "1d2qyyfXs_tSjn7K3CWb5cRiaNHmPoEWZv-QZIOKOW8k"
   },
+  "gitcoinclimate": {
+    "title": "All for Climate DAO - Gitcoin Climate",
+    "description": "Raise funds for your project with Gitcoin",
+    "googleDocId": "18dX1L5BwV0M9CHFGtEAaHoSV0ZyAG6kQMkrFTxXbaJ8"
+  },
+  "gr12": {
+    "title": "All for Climate DAO - Gitcoin Climate GR12 - December 2021",
+    "description": "Raise funds for your project with Gitcoin",
+    "googleDocId": "18dX1L5BwV0M9CHFGtEAaHoSV0ZyAG6kQMkrFTxXbaJ8"
+  },
+  "gr13": {
+    "title": "All for Climate DAO - Gitcoin Climate GR13 - March 2022",
+    "description": "Raise funds for your project with Gitcoin",
+    "googleDocId": "18dX1L5BwV0M9CHFGtEAaHoSV0ZyAG6kQMkrFTxXbaJ8"
+  },
   "contribute": {
     "title": "All for Climate DAO - contribute",
     "description": "Looking for ways to contribute at the intersection of climate and web3?",
