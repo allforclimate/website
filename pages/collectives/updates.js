@@ -60,7 +60,7 @@ export default ({ updates }) => {
       <div className="max-w-screen-md px-4 mx-auto">
         <center>
           <img
-            src="https://allforclimate.earth/images/allforclimate-logo-black.png"
+            src="https://dao.allforclimate.earth/images/allforclimate-logo-black.png"
             width={128}
           />
           <H1>Latest updates from our collectives</H1>

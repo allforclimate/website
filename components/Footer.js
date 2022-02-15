@@ -1,7 +1,10 @@
 const Footer = ({ googleDocId }) => (
-  <div className="footer mt-8 border-t border-gray-300 flex flex-row justify-between items-center w-screen max-w-screen-md mx-auto p-3">
+  <div className="footer mt-8 flex flex-row justify-between items-center w-screen max-w-screen-md mx-auto p-3">
     <div>
-      <a href="https://allforclimate.earth">
+      <a
+        href="https://dao.allforclimate.earth"
+        title="Go back to dao.allforclimate.earth"
+      >
         <img
           src="/images/allforclimate-icon-black.png"
           alt="All for Climate Logo"

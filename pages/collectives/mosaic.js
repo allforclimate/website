@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import CollectiveCard from "../../components/CollectiveCard";
 import { Flex } from "rebass";
 
 const Body = styled.div`
@@ -11,40 +10,10 @@ const Body = styled.div`
   font-size: 16px;
 `;
 
-const Links = styled.div`
-  padding: 0;
-  margin: 0;
-`;
-
-const Link = styled.a`
-  text-decoration: none;
-  display: block;
-  margin: 15px 0;
-  border: 1px solid #4a7a84;
-  border-radius: 5px;
-  min-width: 250px;
-  max-width: 300px;
-  padding: 10px;
-  &:hover {
-    background: #eee;
-  }
-`;
-
-const About = styled.div`
-  margin: 50px 0;
-`;
-
-const Footer = styled.div``;
-
-const FooterLink = styled.a`
-  text-decoration: none;
-  margin-right: 20px;
-  font-size: 11pt;
-`;
-
-const Label = styled.span`
-  color: #555;
-  margin-right: 20px;
+const CollectiveLogo = styled.img`
+  height: 64px;
+  margin: 0 0 0 0;
+  flex: 0 0 auto;
 `;
 
 const H2 = styled.h2`
@@ -54,6 +23,11 @@ const H2 = styled.h2`
 `;
 
 export default ({ collectives }) => {
+  const images = {};
+  collectives.map((node) => {
+    images[node.collective.image] = true;
+  });
+  const imagesArray = Object.keys(images);
   return (
     <Body>
       <center>
@@ -61,10 +35,9 @@ export default ({ collectives }) => {
           src="https://dao.allforclimate.earth/images/allforclimate-logo-black.png"
           width={128}
         />
-        <H2>We are hosting {collectives.length} collectives</H2>
         <Flex flexWrap="wrap" justifyContent="center">
-          {collectives.map((node) => (
-            <CollectiveCard data={node.collective} />
+          {imagesArray.map((image) => (
+            <CollectiveLogo src={image} />
           ))}
         </Flex>
       </center>
@@ -87,7 +60,7 @@ async function getData() {
           slug
           name
           description
-          imageUrl
+          image
           stats {
             balance
             monthlySpending

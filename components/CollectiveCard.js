@@ -1,6 +1,6 @@
-import styled from 'styled-components';
-import { Flex, Box } from 'rebass';
-import numeral from '../lib/numeral';
+import styled from "styled-components";
+import { Flex, Box } from "rebass";
+import numeral from "../lib/numeral";
 
 const Collective = styled.div`
   width: 150px;
@@ -8,7 +8,7 @@ const Collective = styled.div`
   float: left;
   padding: 10px;
   border: 1px solid #eee;
-  border-radius: 3px;
+  border-radius: 10px;
   overflow: hidden;
   margin: 5px;
 `;
@@ -20,13 +20,15 @@ const H1 = styled.h1`
   display: flex;
   align-items: center;
   justify-content: center;
+  line-height: 1;
 `;
 
 const Description = styled.p`
-  font-size: 12px;
+  font-size: 11.5px;
   overflow: hidden;
   color: #222;
   height: 45px;
+  font-weight: 500;
   line-height: 1.3;
 `;
 
@@ -50,7 +52,7 @@ const Number = styled.div`
 `;
 
 const Label = styled.label`
-font-size: 10px;
+  font-size: 10px;
 `;
 
 export default ({ data }) => {
@@ -67,16 +69,20 @@ export default ({ data }) => {
               <Label>backers</Label>
             </Box>
             <Box>
-              <Number>{numeral(data.stats.balance / 100).format('$0,0')}</Number>
+              <Number>
+                {numeral(data.stats.balance / 100).format("$0,0")}
+              </Number>
               <Label>balance</Label>
             </Box>
             <Box>
-              <Number>{numeral(data.stats.monthlySpending / 100).format('$0,0')}</Number>
+              <Number>
+                {numeral(data.stats.monthlySpending / 100).format("$0,0")}
+              </Number>
               <Label>burn</Label>
             </Box>
           </Flex>
         </Stats>
       </Collective>
     </A>
-  )
-}
+  );
+};

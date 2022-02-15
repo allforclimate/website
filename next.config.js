@@ -49,6 +49,18 @@ module.exports = {
         has: [
           {
             type: "host",
+            value: "join.allforclimate.earth",
+          },
+        ],
+        permanent: false,
+        destination:
+          "https://jz04xmgcexm.typeform.com/to/lPbcL9nj?typeform-source=join.allforclimate.earth",
+      },
+      {
+        source: "/(.*)",
+        has: [
+          {
+            type: "host",
             value: "zoom.allforclimate.earth",
           },
         ],
