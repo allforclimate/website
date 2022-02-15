@@ -15,11 +15,21 @@ const defaultValues = sitemap.index;
 export async function getStaticPaths() {
   const paths = [];
   Object.keys(sitemap).forEach((key) => {
+    if (key.match(/^collectives/)) return;
     paths.push({
       params: {
         googleDocId: sitemap[key].googleDocId,
       },
     });
+    if (sitemap[key].aliases) {
+      sitemap[key].aliases.map((alias) => {
+        paths.push({
+          params: {
+            googleDocId: alias,
+          },
+        });
+      });
+    }
     paths.push({
       params: {
         googleDocId: key,

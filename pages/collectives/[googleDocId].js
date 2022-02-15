@@ -16,7 +16,6 @@ export async function getStaticPaths() {
   const paths = [];
   Object.keys(sitemap).forEach((key) => {
     if (!key.match(/^collectives\//)) return;
-    console.log(">>> key", key);
     paths.push({
       params: {
         googleDocId: sitemap[key].googleDocId,
@@ -24,11 +23,11 @@ export async function getStaticPaths() {
     });
     paths.push({
       params: {
-        googleDocId: key.replace("collectives/", ""),
+        googleDocId: key,
       },
     });
   });
-  console.log(paths);
+  console.log(">>> paths", paths);
   return {
     paths,
     fallback: true,
