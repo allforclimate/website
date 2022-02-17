@@ -89,6 +89,11 @@ ul li {
   @apply list-disc ml-8 mt-1;
 }
 
+ol {
+  @apply px-8 my-2;
+  list-style: auto;
+}
+
 .video {
   @apply my-2 -mx-4;
 }

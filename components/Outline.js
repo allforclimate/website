@@ -66,7 +66,7 @@ function Outline({ outline, onChange }) {
       >
         <div className="md:min-h-screen md:overflow-y-auto pl-1 pb-8">
           <div className="sm:hidden absolute top-0 left-0 w-80 bg-gray-100/90 h-12"></div>
-          <h3 className="pl-4 pt-6">On this page</h3>
+          <h3 className="pl-3 pt-6">On this page</h3>
           {outline
             .filter((item) => item.level > 0)
             .map((item, i) => {

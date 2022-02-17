@@ -36,7 +36,7 @@ export async function getStaticPaths() {
       },
     });
   });
-  console.log(paths);
+  // console.log(paths);
   return {
     paths,
     fallback: true,
@@ -121,11 +121,6 @@ export default function Home({ page }) {
     if (Math.abs(docEl.offsetWidth - currentDocWidth) < 50) {
       return;
     }
-    console.log(
-      "computeOffset",
-      currentDocWidth,
-      Math.abs(docEl.offsetWidth - currentDocWidth)
-    );
     setCurrentDocWidth(Number(docEl.offsetWidth) || 120);
     docEl.querySelectorAll("h1,h2,h3,h4,h5,h6").forEach((el) => {
       const slug = el.getAttribute("id");
