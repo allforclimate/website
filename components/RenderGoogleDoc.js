@@ -12,7 +12,7 @@ class RenderGoogleDoc extends React.Component {
           src={img.src}
           width={img.width}
           height={img.height}
-          layout="intrinsic"
+          layout="responsive"
         />,
         img.parentNode
       );

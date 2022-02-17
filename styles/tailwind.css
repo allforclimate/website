@@ -94,6 +94,10 @@ ol {
   list-style: auto;
 }
 
+.imageWrapper {
+  @apply my-2 -mx-4 !important;
+}
+
 .video {
   @apply my-2 -mx-4;
 }
