@@ -179,8 +179,8 @@ export default function Home({ page }) {
             </div>
           )}
         </div>
-        <span className="imageWrapper fullWidth"></span> /* make sure tailwind
-        includes the .imageWrapper class in production */
+        {/* make sure tailwind includes the .imageWrapper.fullWidth classes in production */}
+        <span className="imageWrapper fullWidth"></span>
       </main>
     </div>
   );
