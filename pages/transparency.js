@@ -25,6 +25,9 @@ const H2 = styled.h2`
 `;
 
 const Page = ({ collectives }) => {
+  if (!collectives || collectives.length === 0) {
+    return <Body>No collective found</Body>;
+  }
   const [slug, setSlug] = useState(collectives[0].collective.slug);
 
   return (
@@ -82,22 +85,31 @@ async function getData() {
   }
   `;
 
-  const res = await fetch(process.env.OC_GRAPHQL_API, {
-    method: "post",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ query, variables: { slug: "allforclimate" } }),
-  });
-  const json = await res.json();
-  let collectives = json.data.Collective.memberOf;
-  collectives.sort((a, b) => {
-    if (a.collective.stats.backers.all > b.collective.stats.backers.all)
-      return -1;
-    if (a.collective.stats.backers.all < b.collective.stats.backers.all)
-      return 1;
-    return a.collective.stats.balance > b.collective.stats.balance ? -1 : 1;
-  });
+  let res, json;
+  try {
+    res = await fetch(process.env.OC_GRAPHQL_API, {
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ query, variables: { slug: "allforclimate" } }),
+    });
+    if (res.status !== 200) {
+      throw new Error(`${res.status} ${res.statusText}`);
+    }
+    json = await res.json();
+    let collectives = json.data.Collective.memberOf;
+    collectives.sort((a, b) => {
+      if (a.collective.stats.backers.all > b.collective.stats.backers.all)
+        return -1;
+      if (a.collective.stats.backers.all < b.collective.stats.backers.all)
+        return 1;
+      return a.collective.stats.balance > b.collective.stats.balance ? -1 : 1;
+    });
 
-  return { collectives };
+    return { collectives };
+  } catch (e) {
+    console.error("!!! ERROR transparency.js:", e);
+    return { collectives: [] };
+  }
 }
 
 export async function getStaticProps() {

@@ -114,32 +114,41 @@ async function getData() {
   }
   `;
 
-  const res = await fetch(process.env.OC_GRAPHQL_API, {
-    method: "post",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ query, variables: { slug: "allforclimate" } }),
-  });
-  const json = await res.json();
-  const collectives = json.data.Collective.memberOf;
-  const updates = [];
-  collectives.map((node) => {
-    node.collective.updates.map((u) =>
-      updates.push({
-        ...u,
-        collective: {
-          slug: node.collective.slug,
-          name: node.collective.name,
-          imageUrl: node.collective.imageUrl,
-        },
-        epoch: new Date(u.createdAt).getTime(),
-      })
-    );
-  });
-  updates.sort((a, b) => {
-    return a.epoch < b.epoch ? 1 : -1;
-  });
+  let res, json;
+  try {
+    res = await fetch(process.env.OC_GRAPHQL_API, {
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ query, variables: { slug: "allforclimate" } }),
+    });
+    if (res.status !== 200) {
+      throw new Error(`${res.status} ${res.statusText}`);
+    }
+    json = await res.json();
+    const collectives = json.data.Collective.memberOf;
+    const updates = [];
+    collectives.map((node) => {
+      node.collective.updates.map((u) =>
+        updates.push({
+          ...u,
+          collective: {
+            slug: node.collective.slug,
+            name: node.collective.name,
+            imageUrl: node.collective.imageUrl,
+          },
+          epoch: new Date(u.createdAt).getTime(),
+        })
+      );
+    });
+    updates.sort((a, b) => {
+      return a.epoch < b.epoch ? 1 : -1;
+    });
 
-  return { updates };
+    return { updates };
+  } catch (e) {
+    console.log("!!! ERROR collectives/updates.js", e);
+    return { updates: [] };
+  }
 }
 
 export async function getStaticProps() {
