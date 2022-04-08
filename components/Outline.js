@@ -12,7 +12,7 @@ function Outline({ outline, onChange }) {
     window.scrollTo(0, 0);
     setActive(!isActive);
   }
-
+  const levelsToShow = outline.length > 40 ? 2 : 3;
   return (
     <div id="outline">
       <div className={`menu fixed z-30 top-0 left-0 bg-gray-100/90`}>
@@ -68,7 +68,7 @@ function Outline({ outline, onChange }) {
           <div className="sm:hidden absolute top-0 left-0 w-80 bg-gray-100/90 h-12"></div>
           <h3 className="pl-3 pt-6">On this page</h3>
           {outline
-            .filter((item) => item.level > 0)
+            .filter((item) => item.level > 0 && item.level <= levelsToShow)
             .map((item, i) => {
               return (
                 <a
