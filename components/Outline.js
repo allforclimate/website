@@ -67,30 +67,32 @@ function Outline({ outline, onChange }) {
         <div className="md:min-h-screen md:overflow-y-auto pl-1 pb-8">
           <div className="sm:hidden absolute top-0 left-0 w-80 bg-gray-100/90 h-12"></div>
           <h3 className="pl-3 pt-6">On this page</h3>
-          {outline
-            .filter((item) => item.level > 0 && item.level <= levelsToShow)
-            .map((item, i) => {
-              return (
-                <a
-                  className="block rounded hover:bg-gray-200 transition duration-200"
-                  href={`#${item.slug}`}
-                  key={`${i}-${item.slug}`}
-                >
-                  <div
-                    className={`text-gray-800 ${
-                      (item.level == 1 && "ml-2 font-bold") ||
-                      (item.level == 2 && "ml-4") ||
-                      (item.level == 3 && "ml-6") ||
-                      (item.level == 4 && "ml-8 text-sm py-0.5") ||
-                      (item.level == 5 && "ml-10 text-sm") ||
-                      (item.level == 6 && "ml-12 text-sm")
-                    }  p-1`}
+          <div className="overflow-y-auto max-h-screen">
+            {outline
+              .filter((item) => item.level > 0 && item.level <= levelsToShow)
+              .map((item, i) => {
+                return (
+                  <a
+                    className="block rounded hover:bg-gray-200 transition duration-200"
+                    href={`#${item.slug}`}
+                    key={`${i}-${item.slug}`}
                   >
-                    {item.title}
-                  </div>
-                </a>
-              );
-            })}
+                    <div
+                      className={`text-gray-800 ${
+                        (item.level == 1 && "ml-2 font-bold") ||
+                        (item.level == 2 && "ml-4") ||
+                        (item.level == 3 && "ml-6") ||
+                        (item.level == 4 && "ml-8 text-sm py-0.5") ||
+                        (item.level == 5 && "ml-10 text-sm") ||
+                        (item.level == 6 && "ml-12 text-sm")
+                      }  p-1`}
+                    >
+                      {item.title}
+                    </div>
+                  </a>
+                );
+              })}
+          </div>
         </div>
       </div>
       <div
