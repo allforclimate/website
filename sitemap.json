@@ -24,8 +24,9 @@
     "title": "All for Climate DAO - monthly updates",
     "googleDocId": "1rPNM5SKvBZFJ3zF7tTB8QJJdlnpTJTfLVzwN1PwdDaE"
   },
-  "meetings": {
-    "title": "All for Climate DAO - meetings",
+  "calls": {
+    "aliases": ["meetings"],
+    "title": "All for Climate DAO - calls",
     "googleDocId": "1vK48_DBsyibGgGviG4S5opQjNqmCLdvwy4gTnTxLKuA"
   },
   "collectives": {
