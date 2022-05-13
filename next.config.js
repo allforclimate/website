@@ -83,6 +83,28 @@ module.exports = {
         has: [
           {
             type: "host",
+            value: "bounties.allforclimate.earth",
+          },
+        ],
+        permanent: false,
+        destination: "https://dework.xyz/o/all-for-clim-5YSFCGX71LR0qVyvqsL2w5",
+      },
+      {
+        source: "/(.*)",
+        has: [
+          {
+            type: "host",
+            value: "tasks.allforclimate.earth",
+          },
+        ],
+        permanent: false,
+        destination: "https://dework.xyz/o/all-for-clim-5YSFCGX71LR0qVyvqsL2w5",
+      },
+      {
+        source: "/(.*)",
+        has: [
+          {
+            type: "host",
             value: "projects.allforclimate.earth",
           },
         ],
