@@ -18,21 +18,21 @@ export async function getStaticPaths() {
     if (key.match(/^collectives/)) return;
     paths.push({
       params: {
-        googleDocId: sitemap[key].googleDocId,
+        path: [sitemap[key].googleDocId],
       },
     });
     if (sitemap[key].aliases) {
       sitemap[key].aliases.map((alias) => {
         paths.push({
           params: {
-            googleDocId: alias,
+            path: [alias],
           },
         });
       });
     }
     paths.push({
       params: {
-        googleDocId: key,
+        path: [key],
       },
     });
   });
@@ -44,8 +44,22 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const pageInfo = getPageMetadata(params.googleDocId);
+  let path, edit;
+  if (params.path[params.path.length - 1] === "edit") {
+    params.path.pop();
+    edit = true;
+  }
+  const pageInfo = getPageMetadata(params.path.join("/"));
   const googleDocId = pageInfo.googleDocId || params.googleDocId;
+
+  if (edit) {
+    return {
+      redirect: {
+        destination: `https://docs.google.com/document/d/${googleDocId}/edit`,
+      },
+    };
+  }
+
   let doc = {},
     error = null;
   try {
