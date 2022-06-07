@@ -8,7 +8,6 @@ import ErrorInvalidDocId from "../components/ErrorInvalidDocId";
 import RenderGoogleDoc from "../components/RenderGoogleDoc";
 import sitemap from "../sitemap.json";
 import { useEffect, useState } from "react";
-import { times } from "lodash";
 
 const defaultValues = sitemap.index;
 
@@ -45,11 +44,15 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   let path, edit;
-  if (params.path[params.path.length - 1] === "edit") {
-    params.path.pop();
-    edit = true;
+  let slug = "index";
+  if (params.path) {
+    if (params.path[params.path.length - 1] === "edit") {
+      params.path.pop();
+      edit = true;
+    }
+    slug = params.path.join("/");
   }
-  const pageInfo = getPageMetadata(params.path.join("/"));
+  const pageInfo = getPageMetadata(slug);
   const googleDocId = pageInfo.googleDocId || params.googleDocId;
 
   if (edit) {
