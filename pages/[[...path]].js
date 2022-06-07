@@ -12,7 +12,13 @@ import { useEffect, useState } from "react";
 const defaultValues = sitemap.index;
 
 export async function getStaticPaths() {
-  const paths = [];
+  const paths = [
+    {
+      params: {
+        path: [],
+      },
+    },
+  ];
   Object.keys(sitemap).forEach((key) => {
     if (key.match(/^collectives/)) return;
     paths.push({
