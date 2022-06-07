@@ -183,7 +183,7 @@ export default function Home({ page }) {
         <meta name="og:image" content={image || defaultValues.image} />
       </Head>
 
-      <main className="relative min-h-screen md:flex">
+      <main className="relative min-h-screen md:flex w-full overflow-hidden">
         {outline && (
           <Outline outline={outline} onChange={() => computeOffset()} />
         )}
