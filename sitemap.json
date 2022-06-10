@@ -54,6 +54,16 @@
     "description": "Arrecade fundos para o seu projeto com Gitcoin 🌱🌻",
     "googleDocId": "1ENcBTsIDyrViKMilPAe5NV92Ar4MZzft7vSBrezFTLs"
   },
+  "finance": {
+    "title": "All for Climate DAO - Finance Working Group",
+    "description": "Finance Working Group",
+    "googleDocId": "1hij-PDHERyNsodd39O2lvmPWbk7kZnI447wyR-1z4zA"
+  },
+  "bounties": {
+    "title": "All for Climate DAO - bounties",
+    "description": "Open bounties to contribute to All for Climate DAO",
+    "googleDocId": "16ev13mDsmlcm06j-qfcAXzLJpqQ6N8MqK0Z1lPJz-xQ"
+  },
   "regens-unite-conference-brussels-2022": {
     "title": "Regens Unite Conference 🔅 Brussels 2022 - All for Climate DAO",
     "description": "A 2-day conference (+ 2-day hackathon) to unite all regens in the capital of Europe and explore the potential of Web3 to regenerate the earth and local communities.",
