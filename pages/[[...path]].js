@@ -51,6 +51,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   let path, edit;
   let slug = "index";
+
   if (params.path) {
     if (params.path[params.path.length - 1] === "edit") {
       params.path.pop();
@@ -59,7 +60,7 @@ export async function getStaticProps({ params }) {
     slug = params.path.join("/");
   }
   const pageInfo = getPageMetadata(slug);
-  const googleDocId = pageInfo.googleDocId || params.googleDocId;
+  const googleDocId = pageInfo.googleDocId || params.path[0];
 
   if (edit) {
     return {
@@ -71,10 +72,20 @@ export async function getStaticProps({ params }) {
 
   let doc = {},
     error = null;
-  try {
-    doc = await getHTMLFromGoogleDocId(googleDocId);
-  } catch (e) {
-    error = e.message;
+
+  if (!googleDocId) {
+    error = "invalid_googledocid";
+  } else {
+    try {
+      doc = await getHTMLFromGoogleDocId(googleDocId);
+    } catch (e) {
+      error = e.message;
+    }
+  }
+
+  if (!doc) {
+    doc = {};
+    error = `Could not get the HTML for this Google Doc ID (${googleDocId})`;
   }
 
   const page = {
@@ -83,7 +94,7 @@ export async function getStaticProps({ params }) {
     image: pageInfo.image || null,
     body: doc.body || null,
     outline: doc.outline || null,
-    googleDocId,
+    googleDocId: googleDocId || null,
     error,
   };
 
@@ -171,6 +182,23 @@ export default function Home({ page }) {
     };
   });
 
+  let errorComponent = null;
+  switch (error) {
+    case "not_published":
+      errorComponent = <ErrorNotPublished googleDocId={googleDocId} />;
+      break;
+    case "invalid_googledocid":
+      errorComponent = <ErrorInvalidDocId googleDocId={googleDocId} />;
+      break;
+    default:
+      errorComponent = (
+        <div className="p-8">
+          <h2>Error 😔</h2>
+          <p>{error}</p>
+        </div>
+      );
+  }
+
   return (
     <div className="w-full">
       <Head>
@@ -189,12 +217,7 @@ export default function Home({ page }) {
         )}
         <div className="content px-4 mx-auto max-w-screen-md flex-1">
           {!body && !error && <p>Loading...</p>}
-          {error === "not_published" && (
-            <ErrorNotPublished googleDocId={googleDocId} />
-          )}
-          {error === "invalid_googledocid" && (
-            <ErrorInvalidDocId googleDocId={googleDocId} />
-          )}
+          {errorComponent}
           {body && (
             <div id="document">
               <RenderGoogleDoc html={body} />
