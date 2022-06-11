@@ -190,17 +190,19 @@ export default function Home({ page }) {
   });
 
   let errorComponent = null;
-  switch (error) {
-    case "invalid_googledocid":
-      errorComponent = <ErrorInvalidDocId googleDocId={googleDocId} />;
-      break;
-    default:
-      errorComponent = (
-        <div className="p-8">
-          <h2>Error 😔</h2>
-          <p>{error}</p>
-        </div>
-      );
+  if (error) {
+    switch (error) {
+      case "invalid_googledocid":
+        errorComponent = <ErrorInvalidDocId googleDocId={googleDocId} />;
+        break;
+      default:
+        errorComponent = (
+          <div className="p-8">
+            <h2>Error 😔</h2>
+            <p>{error}</p>
+          </div>
+        );
+    }
   }
 
   return (
