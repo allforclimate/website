@@ -80,6 +80,13 @@ export async function getStaticProps({ params }) {
       doc = await getHTMLFromGoogleDocId(googleDocId);
     } catch (e) {
       error = e.message;
+      if (error === "not_published") {
+        return {
+          redirect: {
+            destination: `https://docs.google.com/document/d/${googleDocId}/edit`,
+          },
+        };
+      }
     }
   }
 
@@ -184,9 +191,6 @@ export default function Home({ page }) {
 
   let errorComponent = null;
   switch (error) {
-    case "not_published":
-      errorComponent = <ErrorNotPublished googleDocId={googleDocId} />;
-      break;
     case "invalid_googledocid":
       errorComponent = <ErrorInvalidDocId googleDocId={googleDocId} />;
       break;
